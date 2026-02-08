@@ -13,53 +13,78 @@
 
 ## Quickstart (< 5 minutes)
 
-### Step 1: Set System Prompt in Your LLM
+### Step 1: Configure System Prompt
 
-Copy the full text from [`SYSTEM_PROMPT.md`](./SYSTEM_PROMPT.md) into your LLM's system prompt.
+IDD can be used in two ways:
 
-**For Claude (claude.ai)**:
-1. Open https://claude.ai
-2. Go to **Settings** → **Custom Instructions** (or **Developer Settings**)
-3. Paste the contents of `SYSTEM_PROMPT.md` in the "System" field
-4. Save
+#### Option A: IDE with Local Config (Recommended)
 
-**For ChatGPT / OpenAI**:
-1. Go to https://chat.openai.com
-2. Open any conversation
-3. Click your name → **Settings** → **Custom Instructions**
-4. Paste `SYSTEM_PROMPT.md` contents in the system field
-5. Save
+**Your LLM reads files automatically from your project.** No web configuration needed.
 
-**For Cursor IDE**:
-1. Open `.cursor/rules` or create it
-2. Paste `SYSTEM_PROMPT.md` contents
-3. Save and restart
-
-**For other LLMs**:
-- Look for "System Prompt", "System Message", or "Instructions" settings
-- Paste the contents of `SYSTEM_PROMPT.md`
-- Most LLMs have this option in settings/preferences
-
-### Step 2: Create Project Context
-Copy [`templates/.claude.md`](./templates/.claude.md) to your project root and customize it:
-
+**For Cursor**:
 ```bash
-cp templates/.claude.md /your/project/.claude.md
-# Edit to match YOUR project
-nano /your/project/.claude.md
+cp SYSTEM_PROMPT.md /your/project/.cursorrules
+# Cursor reads this automatically
 ```
 
-### Step 3: Create Ignore File
-Copy [`templates/.claudeignore`](./templates/.claudeignore) to your project root:
+**For Windsurf**:
+```bash
+cp SYSTEM_PROMPT.md /your/project/.windsurfrules
+# Windsurf reads this automatically
+```
+
+**For Claude Code CLI**:
+```bash
+# Already working! Claude Code reads .claude.md automatically
+cp templates/.claude.md /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
+```
+
+**For Aider**:
+```bash
+cp SYSTEM_PROMPT.md /your/project/.aider.md
+```
+
+#### Option B: Web Interface (Manual Setup)
+
+**You must paste the system prompt once in settings.**
+
+**For Claude (claude.ai)**:
+1. Settings → Custom Instructions
+2. Paste `SYSTEM_PROMPT.md` contents
+3. Save
+
+**For ChatGPT**:
+1. Settings → Custom Instructions
+2. Paste `SYSTEM_PROMPT.md` contents
+3. Save
+
+### Step 2: Add Project Context
+
+Copy templates to your project and customize:
 
 ```bash
+# Copy templates
+cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
-# Edit to list files your project cannot modify
+
+# Edit to match YOUR project
+nano /your/project/.claude.md
 nano /your/project/.claudeignore
 ```
 
-### Step 4: Start Using IDD
-Paste your request with a shortcut:
+Your project structure should look like:
+```
+your-project/
+├── .claude.md          # Project-specific context
+├── .claudeignore       # Files LLM cannot touch
+├── .cursorrules        # (if using Cursor) System prompt
+└── ... your code ...
+```
+
+### Step 3: Start Coding
+
+Use shortcuts in your prompts:
 
 ```
 @surgical Fix the login button not working
@@ -68,7 +93,7 @@ Paste your request with a shortcut:
 @check Review security of auth module
 ```
 
-**That's it. You're ready.**
+**That's it. Everything is local to your project.**
 
 ---
 
