@@ -1,108 +1,67 @@
 # Intent-Driven Development (IDD)
 
-**Transform any LLM into a Senior Software Engineer — at 10x lower cost.**
+A methodology that transforms any LLM into a Senior Software Engineer through optimized prompting and workflow management.
 
-## Why IDD?
+## Key Benefits
 
-| Metric | Traditional (Spec-Kit) | IDD | Improvement |
-|--------|------------------------|-----|-------------|
-| Monthly cost (5 devs) | $2,850 | $150-300 | **-90%** |
-| Tokens per request | 7,000 | 400-800 | **-85%** |
-| Time to working code | 4-8 hours | 20-30 min | **-90%** |
-| Bugs per feature | 3-5 | 0-1 | **-80%** |
+- **Token efficient**: ~400-800 tokens per request
+- **Production-ready code**: First attempt success
+- **Cost effective**: $24-150/month for a 5-dev team
+- **Fast**: 20-30 minutes from idea to working code
+- **Quality**: 0-1 bugs per feature average
 
-## Quickstart (< 5 minutes)
+---
 
-### Step 1: Configure System Prompt
+## Quick Start
 
-IDD can be used in two ways:
+### 1. Choose Your Setup
 
-#### Option A: IDE with Local Config (Recommended)
+#### Option A: IDE with File-Based Config (Recommended)
 
-**Your LLM reads files automatically from your project.** No web configuration needed.
+Your IDE reads configuration files directly from your project.
 
-**For Cursor**:
+**Cursor:**
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.cursorrules
 cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
 ```
 
-**For Windsurf**:
+**Claude Code CLI:**
+```bash
+cp templates/.claude-complete.md /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
+```
+
+**Windsurf:**
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.windsurfrules
 cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
 ```
 
-**For Claude Code CLI**:
-```bash
-# Use the complete template (includes system prompt + project context)
-cp templates/.claude-complete.md /your/project/.claude.md
-cp templates/.claudeignore /your/project/.claudeignore
-# Edit .claude.md to customize for YOUR project
-```
+#### Option B: Web Interface
 
-**For Aider**:
-```bash
-cp SYSTEM_PROMPT.md /your/project/.aider.md
-cp templates/.claude.md /your/project/.claude.md
-```
+Copy `SYSTEM_PROMPT.md` content into your LLM's custom instructions/system prompt field in settings.
 
-#### Option B: Web Interface (Manual Setup)
+### 2. Customize for Your Project
 
-**You must paste the system prompt once in settings.**
+Edit `.claude.md` to match your project:
+- Update stack, architecture, patterns
+- List forbidden files
+- Add project-specific conventions
+- Document gotchas and recent decisions
 
-**For Claude (claude.ai)**:
-1. Settings → Custom Instructions
-2. Paste `SYSTEM_PROMPT.md` contents
-3. Save
+### 3. Start Using IDD
 
-**For ChatGPT**:
-1. Settings → Custom Instructions
-2. Paste `SYSTEM_PROMPT.md` contents
-3. Save
-
-### Step 2: Add Project Context
-
-Copy templates to your project and customize:
-
-**For Claude Code CLI** (all-in-one file):
-```bash
-cp templates/.claude-complete.md /your/project/.claude.md
-cp templates/.claudeignore /your/project/.claudeignore
-# Edit .claude.md: Replace [Project Name], [Stack], etc.
-```
-
-**For other IDEs** (separate files):
-```bash
-cp templates/.claude.md /your/project/.claude.md
-cp templates/.claudeignore /your/project/.claudeignore
-# System prompt already in .cursorrules or .windsurfrules
-```
-
-Your project structure should look like:
-```
-your-project/
-├── .claude.md          # Project context (complete for Claude Code, minimal for others)
-├── .claudeignore       # Files LLM cannot touch
-├── .cursorrules        # (Cursor only) System prompt
-├── .windsurfrules      # (Windsurf only) System prompt
-└── ... your code ...
-```
-
-### Step 3: Start Coding
-
-Use shortcuts in your prompts:
+Add shortcuts to your prompts:
 
 ```
-@surgical Fix the login button not working
+@surgical Fix login button bug
 @fast Fix typo in README
-@plan Add user authentication system
+@plan Add user authentication
 @check Review security of auth module
 ```
-
-**That's it. Everything is local to your project.**
 
 ---
 
@@ -110,138 +69,148 @@ Use shortcuts in your prompts:
 
 ### The 6 Core Behaviors
 
-1. **Surface Assumptions** — Lists what it assumes before coding
-2. **Stop If Confused** — Never guesses, asks for clarification
-3. **Push Back on Bad Ideas** — Challenges poor approaches
-4. **Simplicity First** — Prefers boring, obvious solutions
-5. **Surgical Scope** — Touches only planned files
-6. **Dead Code Cleanup** — Flags unreachable code
+1. **Surface Assumptions** — Lists assumptions before coding
+2. **Stop If Confused** — Asks questions instead of guessing
+3. **Push Back on Bad Ideas** — Challenges problematic approaches
+4. **Simplicity First** — Prefers obvious solutions over clever ones
+5. **Surgical Scope** — Touches only necessary files
+6. **Dead Code Cleanup** — Flags unreachable code for removal
 
 ### The Workflow
 
 ```
 User Request
     ↓
-[Read .claude.md] → Project context
+Read .claude.md
     ↓
-[ASSUMPTIONS] → "Is this correct?"
+List ASSUMPTIONS → Wait for approval
     ↓
-[PLAN] → "Proceeding in 3s..."
+Create PLAN → Wait for approval
     ↓
-[IMPLEMENT] → Surgical changes
+Implement surgically
     ↓
-[DOCUMENT] → CHANGES + UNTOUCHED + RISKS
+Document: CHANGES + UNTOUCHED + RISKS
 ```
 
 ### Shortcuts
 
-| Shortcut | Use Case | Skips |
-|----------|----------|-------|
+| Shortcut | When to Use | What It Skips |
+|----------|-------------|---------------|
 | `@surgical` | Bug fix, small feature | Verbose assumptions |
 | `@fast` | Typo, formatting | Assumptions + Plan |
-| `@plan` | Complex feature, refactor | Nothing (full workflow) |
-| `@check` | Code review, audit | Implementation |
+| `@plan` | Complex feature | Nothing (full workflow) |
+| `@check` | Code review only | Implementation |
 
 ---
 
-## File Structure
+## Project Files
 
-```
-your-project/
-├── .claude.md          # Project context (read once per session)
-├── .claudeignore       # Files the LLM cannot touch
-└── ... your code ...
-```
+### .claude.md
+Your project context (read once per session):
+- Architecture & stack
+- Coding conventions
+- Critical rules & forbidden files
+- Common patterns
+- Known gotchas
 
-### .claude.md Sections
-
-- **ARCHITECTURE** — Stack, structure, patterns
-- **CONVENTIONS** — Style, naming, tests, commits
-- **CRITICAL RULES** — Forbidden files, performance, security
-- **PATTERNS** — Common code patterns to follow
-- **GOTCHAS** — Known issues and quirks
-- **RECENT DECISIONS** — Latest architectural decisions
+**Token budget**: <1,500 tokens
 
 ### .claudeignore
+Files the LLM must never touch:
+- Authentication code
+- Payment processing
+- Database migrations
+- Secrets & config
 
-Same format as `.gitignore`. List files the LLM must never modify:
+**Format**: Same as `.gitignore`
 
-```
-auth.js          # Authentication
-payment.js       # Payment processing
-.env             # Secrets
-node_modules/    # Dependencies
-```
+### System Prompt
+Core IDD behaviors (repeated every request):
+- 6 core behaviors
+- Workflow steps
+- Output format
+- Anti-patterns
+
+**Token budget**: <500 tokens
 
 ---
 
 ## Token Budget
 
-| Component | Max Tokens | Frequency |
-|-----------|------------|-----------|
-| System Prompt | 500 | Every request |
-| .claude.md | 1,500 | Once per session |
-| .claudeignore | 200 | Once per session |
-| **Total first request** | **~2,200** | — |
-| **Subsequent requests** | **~500** | — |
+| Component | Size | Loaded |
+|-----------|------|--------|
+| System prompt | 299 tokens | Every request |
+| .claude.md | 244 tokens | Once per session |
+| .claudeignore | 48 tokens | Once per session |
+| **Total first request** | **591 tokens** | — |
+| **Subsequent requests** | **~400 tokens** | — |
 
-### Cost Calculation
+### Cost Estimate
 
 ```
-100 requests/day × 20 days × 800 tokens avg × $0.003/1K = $4.80/month/dev
+100 requests/day/dev × 20 days × 800 avg tokens = 160K tokens/month/dev
+160K × $0.003 per 1K tokens = $4.80/month/dev
+5 developers = $24/month
 ```
-
-Compare to Spec-Kit: **$570/month/dev**
 
 ---
 
 ## Examples
 
-See [`docs/EXAMPLES.md`](./docs/EXAMPLES.md) for complete walkthroughs:
+See [docs/EXAMPLES.md](./docs/EXAMPLES.md) for detailed walkthroughs:
 
-1. **Bug Fix** — Email validation not working
-2. **Feature** — Add "Remember Me" to login
-3. **Refactor** — Extract duplicate validation logic
-4. **Confusion Handling** — Vague "improve performance" request
+1. **Bug Fix** — Email validation not working (~8 min, 450 tokens)
+2. **Feature** — Add "Remember Me" to login (~35 min, 2,100 tokens)
+3. **Refactor** — Extract duplicate logic with dead code detection
+4. **Confusion Handling** — How IDD handles vague requests
 
 ---
 
 ## Best Practices
 
 ### Do
-
 - Keep `.claude.md` under 1,500 tokens
-- Prune old decisions monthly
 - Use shortcuts for 70% of requests
-- Let the LLM push back on bad ideas
+- Let the LLM challenge bad ideas
+- Prune old decisions monthly
 
 ### Don't
-
-- Add verbose explanations to system prompt
-- Duplicate information between files
 - Skip the `.claudeignore` file
-- Override the LLM when it flags confusion
+- Override when LLM flags confusion
+- Add verbose explanations
+- Duplicate info between files
 
 ---
 
-## Comparison with Alternatives
+## Documentation
 
-See [`docs/COMPARISON.md`](./docs/COMPARISON.md) for detailed analysis.
+- [SHORTCUTS.md](./docs/SHORTCUTS.md) — Detailed shortcut guide
+- [EXAMPLES.md](./docs/EXAMPLES.md) — Complete walkthroughs
+- [COMPARISON.md](./docs/COMPARISON.md) — Compare with alternatives
+- [MIGRATION.md](./guides/MIGRATION.md) — Migrate from other tools
 
-| Feature | IDD | Spec-Kit | Cursor |
-|---------|-----|----------|--------|
-| Token efficiency | Excellent | Poor | Medium |
-| Assumption surfacing | Built-in | None | None |
-| Confusion detection | Built-in | None | None |
-| Simplicity enforcement | Built-in | None | None |
-| Cost (5 devs/month) | $150-300 | $2,850 | $1,200 |
+---
+
+## Validation Tools
+
+**Token Counter:**
+```bash
+./scripts/token-counter.sh
+```
+Validates all files are within token budgets.
+
+**Cost Calculator:**
+```bash
+./scripts/cost-calculator.sh [devs] [requests/day] [work_days]
+```
+Estimates monthly costs based on usage.
 
 ---
 
 ## Contributing
 
 1. Keep all changes token-efficient
-2. Test with multiple LLMs (Claude, GPT, Gemini)
+2. Test with multiple LLMs
 3. Measure before/after token usage
 
 ---
