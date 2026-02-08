@@ -24,25 +24,29 @@ IDD can be used in two ways:
 **For Cursor**:
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.cursorrules
-# Cursor reads this automatically
+cp templates/.claude.md /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
 ```
 
 **For Windsurf**:
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.windsurfrules
-# Windsurf reads this automatically
+cp templates/.claude.md /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
 ```
 
 **For Claude Code CLI**:
 ```bash
-# Already working! Claude Code reads .claude.md automatically
-cp templates/.claude.md /your/project/.claude.md
+# Use the complete template (includes system prompt + project context)
+cp templates/.claude-complete.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
+# Edit .claude.md to customize for YOUR project
 ```
 
 **For Aider**:
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.aider.md
+cp templates/.claude.md /your/project/.claude.md
 ```
 
 #### Option B: Web Interface (Manual Setup)
@@ -63,22 +67,27 @@ cp SYSTEM_PROMPT.md /your/project/.aider.md
 
 Copy templates to your project and customize:
 
+**For Claude Code CLI** (all-in-one file):
 ```bash
-# Copy templates
+cp templates/.claude-complete.md /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
+# Edit .claude.md: Replace [Project Name], [Stack], etc.
+```
+
+**For other IDEs** (separate files):
+```bash
 cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
-
-# Edit to match YOUR project
-nano /your/project/.claude.md
-nano /your/project/.claudeignore
+# System prompt already in .cursorrules or .windsurfrules
 ```
 
 Your project structure should look like:
 ```
 your-project/
-├── .claude.md          # Project-specific context
+├── .claude.md          # Project context (complete for Claude Code, minimal for others)
 ├── .claudeignore       # Files LLM cannot touch
-├── .cursorrules        # (if using Cursor) System prompt
+├── .cursorrules        # (Cursor only) System prompt
+├── .windsurfrules      # (Windsurf only) System prompt
 └── ... your code ...
 ```
 
