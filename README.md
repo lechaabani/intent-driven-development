@@ -16,33 +16,43 @@ A methodology that transforms any LLM into a Senior Software Engineer through op
 
 ### 1. Choose Your Setup
 
-#### Option A: IDE with File-Based Config (Recommended)
+All tools use the same three files:
+- `SYSTEM_PROMPT.md` — Core IDD behaviors
+- `templates/.claude.md` — Project context template
+- `templates/.claudeignore` — Files to never touch
 
-Your IDE reads configuration files directly from your project.
+#### Cursor
 
-**Cursor:**
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.cursorrules
 cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
 ```
 
-**Claude Code CLI:**
-```bash
-cp templates/.claude-complete.md /your/project/.claude.md
-cp templates/.claudeignore /your/project/.claudeignore
-```
+#### Windsurf
 
-**Windsurf:**
 ```bash
 cp SYSTEM_PROMPT.md /your/project/.windsurfrules
 cp templates/.claude.md /your/project/.claude.md
 cp templates/.claudeignore /your/project/.claudeignore
 ```
 
-#### Option B: Web Interface
+#### Claude Code CLI
 
-Copy `SYSTEM_PROMPT.md` content into your LLM's custom instructions/system prompt field in settings.
+```bash
+# Use helper script (combines SYSTEM_PROMPT + .claude.md)
+./scripts/setup-claude-code.sh /your/project
+
+# Or manually:
+cat SYSTEM_PROMPT.md templates/.claude.md > /your/project/.claude.md
+cp templates/.claudeignore /your/project/.claudeignore
+```
+
+#### Web Interface (claude.ai, ChatGPT, etc.)
+
+1. Copy `SYSTEM_PROMPT.md` content into Settings → Custom Instructions
+2. Copy `templates/.claude.md` to `/your/project/.claude.md`
+3. Copy `templates/.claudeignore` to `/your/project/.claudeignore`
 
 ### 2. Customize for Your Project
 
