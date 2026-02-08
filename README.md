@@ -13,14 +13,40 @@
 
 ## Quickstart (< 5 minutes)
 
-### Step 1: Copy System Prompt
-Copy the contents of [`SYSTEM_PROMPT.md`](./SYSTEM_PROMPT.md) into your LLM's system prompt.
+### Step 1: Set System Prompt in Your LLM
+
+Copy the full text from [`SYSTEM_PROMPT.md`](./SYSTEM_PROMPT.md) into your LLM's system prompt.
+
+**For Claude (claude.ai)**:
+1. Open https://claude.ai
+2. Go to **Settings** → **Custom Instructions** (or **Developer Settings**)
+3. Paste the contents of `SYSTEM_PROMPT.md` in the "System" field
+4. Save
+
+**For ChatGPT / OpenAI**:
+1. Go to https://chat.openai.com
+2. Open any conversation
+3. Click your name → **Settings** → **Custom Instructions**
+4. Paste `SYSTEM_PROMPT.md` contents in the system field
+5. Save
+
+**For Cursor IDE**:
+1. Open `.cursor/rules` or create it
+2. Paste `SYSTEM_PROMPT.md` contents
+3. Save and restart
+
+**For other LLMs**:
+- Look for "System Prompt", "System Message", or "Instructions" settings
+- Paste the contents of `SYSTEM_PROMPT.md`
+- Most LLMs have this option in settings/preferences
 
 ### Step 2: Create Project Context
 Copy [`templates/.claude.md`](./templates/.claude.md) to your project root and customize it:
 
 ```bash
 cp templates/.claude.md /your/project/.claude.md
+# Edit to match YOUR project
+nano /your/project/.claude.md
 ```
 
 ### Step 3: Create Ignore File
@@ -28,10 +54,12 @@ Copy [`templates/.claudeignore`](./templates/.claudeignore) to your project root
 
 ```bash
 cp templates/.claudeignore /your/project/.claudeignore
+# Edit to list files your project cannot modify
+nano /your/project/.claudeignore
 ```
 
-### Step 4: Start Coding
-Use shortcuts to optimize token usage:
+### Step 4: Start Using IDD
+Paste your request with a shortcut:
 
 ```
 @surgical Fix the login button not working
